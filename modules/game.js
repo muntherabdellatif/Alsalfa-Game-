@@ -1,37 +1,25 @@
 import { Round } from "./round.js";
 import { Player } from "./player.js";
+import { Page } from "./page.js";
 
 class Game {
     subjects = [];
     rounds = [];
     players = [];
     options = [];
-    roundSteps = ["show players the subject", "ask other", "voicing of person", "voicing of subject", "show result"]
-    gameContainer = null;
+    Page = null;
 
     constructor(gameContainer, subjects) {
-        this.gameContainer = gameContainer;
         this.subjects = subjects;
+        this.page = new Page(gameContainer);
     }
 
     startGame = () => {
-        this.showSelectSubjectPage();
+        this.page.renderSelectSubjectPage(this.subjects);
         const subjectButtons = document.querySelectorAll(".subject");
         subjectButtons.forEach((btn) => {
             btn.addEventListener("click", this.selectSubjectAndShowAddPlayersPage);
         })
-    }
-
-    showSelectSubjectPage = () => {
-        let allSubjectHtml = "<h1 class='header' >قم باختيار موضوع اللعبة</h1>";
-        this.subjects.forEach((subject) => {
-            const element = `
-                <div class='subject' data-value="${subject.name}">
-                    ${subject.name}
-                </div>`;
-            allSubjectHtml += element;
-        });
-        this.gameContainer.innerHTML = allSubjectHtml;
     }
 
     selectSubjectAndShowAddPlayersPage = (event) => {
@@ -40,24 +28,7 @@ class Game {
     }
 
     showAddPlayersPage = () => {
-        let playersPageHtml = "<h1 class='header'>قم باختيار الاعبين</h1>";
-        if (this.players.length > 0) {
-            this.players.forEach((player, index) => {
-                playersPageHtml += `
-                <div class="players_Box">
-                    <p>${player.name}</p>
-                    <button class="delete_player" data-player=${index}>حذف الاعب</button>
-                </div>
-                `;
-            })
-        }
-        playersPageHtml += `
-        <div class="add_player_form">
-            <input type="text" name="player" id="player" placeholder="ادخل اسم اللاعب">
-            <button id="add_player_button">إضافة لاعب</button>
-        </div>`;
-        playersPageHtml += `<button id="start_round">التالي</button>`
-        this.gameContainer.innerHTML = playersPageHtml;
+        this.page.renderAddPlayersPage(this.players);
         document.getElementById("add_player_button").addEventListener("click", this.AddPlayersAndReloadThePage);
         document.querySelectorAll(".delete_player").forEach((deleteButton) => {
             deleteButton.addEventListener("click", this.deletePlayerAndReloadThePage);
@@ -97,18 +68,42 @@ class Game {
         round.setOutTheRoundPlayer(thePlayerOutTheRound);
         round.setRoundSubject(randomOption);
         this.rounds.push(round);
-        this.PlayerRound();
+        this.PlayRound();
         console.log(this);
     }
 
-    PlayerRound = () => {
-        currentRoundStep = this.currentRoundStep();
+    PlayRound = () => {
+        let currentStep = this.currentRoundStep();
+        let currentPlayer = this.players[this.currentRound().getStepIndex()];
 
+        switch (currentStep) {
+            case "show players the subject":
+                this.page.renderGiveTheDeviceToPlayer(currentPlayer);
+                document.getElementById("show_player_the_option").addEventListener("click", () => {
+                    if (currentPlayer.name == this.currentRound().getOutTheRoundPlayer().name) {
+                        this.page.renderOutOfTheRoundPlayer()
+                    }
+                    else {
+                        this.page.renderShowPlayerTheOption(this.currentRound().getRoundSubject())
+                    }
+                })
+                document.getElementById("give_the_device_to_next_player").addEventListener("click", () => {
+
+                })
+                break;
+
+            default:
+                break;
+        }
     }
 
     currentRoundStep = () => {
-        let currentRound = this.rounds[this.rounds.length - 1]
-        return currentRound.roundStepsCounter;
+        let currentRound = this.currentRound();
+        return currentRound.roundSteps[currentRound.roundStepsCounter];
+    }
+
+    currentRound = () => {
+        return this.rounds[this.rounds.length - 1]
     }
 }
 
