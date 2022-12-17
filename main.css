@@ -1,0 +1,54 @@
+.subject {
+  text-align: center;
+  display: block;
+  margin: 20px auto;
+  background: green;
+  color: white;
+  width: 180px;
+  border-radius: 20px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.header {
+  text-align: center;
+}
+
+.add_player_form {
+  width: 100;
+  display: flex;
+  justify-content: center;
+}
+
+.players_Box {
+  width: 400px;
+  display: flex;
+  background: green;
+  justify-content: space-between;
+  margin: 10px auto;
+  padding: 10px;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.players_Box p {
+  text-align: end;
+  width: 300px;
+  color: white;
+  padding: 0;
+  margin: 0;
+}
+
+.players_Box .delete_player {
+  padding: 5px 10px;
+  height: fit-content;
+  background-color: red;
+  border: solid red;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+#start_round {
+  margin: auto;
+}
