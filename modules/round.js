@@ -3,7 +3,7 @@ class Round {
     roundStepsCounter = 0;
     roundSubject = "";
     outTheRoundPlayer = null;
-    roundSteps = ["show players the subject", "ask other", "voicing of person", "voicing of subject", "show result"]
+    roundSteps = ["show players the subject", "ask other", "free ask", "voicing of person", "voicing of subject", "show result"]
     stepIndex = 0;
 
     constructor(roundNumber) {
@@ -28,6 +28,23 @@ class Round {
 
     getStepIndex = () => {
         return this.stepIndex;
+    }
+
+    setStepIndex = (index) => {
+        this.stepIndex = index;
+    }
+
+    getRoundSteps = () => {
+        return this.roundSteps;
+    }
+
+    incrementRoundStepsCounter = () => {
+        this.roundStepsCounter += 1;
+        this.stepIndex = 0;
+    }
+
+    getRoundStepsCounter = () => {
+        return this.roundStepsCounter;
     }
 }
 

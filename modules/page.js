@@ -63,6 +63,37 @@ class Page {
         this.gameContainer.innerHTML = html;
     }
 
+    renderAskPage = (player1, player2) => {
+        let html = `
+        <p> على اللاعب</p>
+        <p>${player1}</p>
+        <p>  ان يسال اللاعب</p>
+        <p>${player2}</p>
+        <button id="ask_other_player">التالي</button>
+    `;
+        this.gameContainer.innerHTML = html;
+    }
+
+    renderFreeAsk = () => {
+        let html = `
+        <p> اضغط التالي لبدأ التصويت في حال انتهيتم من الاسئلة </p>
+        <button id="start_voicing">التالي</button>
+    `;
+        this.gameContainer.innerHTML = html;
+    }
+
+    renderVoicingOnPlayer = (currentPlayer, otherPlayers) => {
+        let html = `
+            <span> على اللاعب </span>
+            <span> ${currentPlayer.name} </span>
+            <span> اختيار اللاعب الذي لا يعلم موضوع الجولة : </span>
+        `;
+        otherPlayers.forEach((player, index) => {
+            html += `<p class="player_options" data-player="${index}">${player.name} </p>`
+        })
+        this.gameContainer.innerHTML = html;
+    }
+
 }
 
 export { Page };
