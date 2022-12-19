@@ -3,7 +3,7 @@ class Round {
     roundStepsCounter = 0;
     roundSubject = "";
     outTheRoundPlayer = null;
-    roundSteps = ["show players the subject", "ask other", "free ask", "voicing of person", "voicing of subject", "show result"]
+    roundSteps = ["show players the subject", "ask other", "free ask", "voicing of person", "show the player that out of the round", "voicing of subject", "show result"]
     stepIndex = 0;
 
     constructor(roundNumber) {

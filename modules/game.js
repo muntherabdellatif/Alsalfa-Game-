@@ -102,7 +102,13 @@ class Game {
                 this.freeAsk(currentRound);
                 break;
             case "voicing of person":
-                this.voicingOnPlayer(currentPlayer);
+                this.voicingOnPlayer(currentPlayer, currentRound);
+                break;
+            case "show the player that out of the round":
+                this.showThePlayerThatOutOfTheRound(currentRound);
+                break;
+            case "voicing of subject":
+                this.voicingOnOptions(currentRound);
                 break;
             default:
                 break;
@@ -152,16 +158,40 @@ class Game {
         })
     }
 
-    voicingOnPlayer = (currentPlayer) => {
+    voicingOnPlayer = (currentPlayer, currentRound) => {
         let otherPlayers = this.players.filter(x => x != currentPlayer);
         console.log({ currentPlayer, otherPlayers })
         this.page.renderVoicingOnPlayer(currentPlayer, otherPlayers);
         document.querySelectorAll(".player_options").forEach((option) => {
             option.addEventListener("click", (event) => {
-                console.log(currentPlayer);
-                console.log(otherPlayers[event.target.dataset.player]);
+                if (currentRound.outTheRoundPlayer == otherPlayers[event.target.dataset.player]) {
+                    currentPlayer.addScore();
+                }
+                let index = currentRound.getStepIndex();
+                if (currentRound.getStepIndex() >= this.players.length - 1) {
+                    currentRound.incrementRoundStepsCounter();
+                } else {
+                    currentRound.setStepIndex(index + 1);
+                }
+                this.PlayRound();
             })
         })
+    }
+
+    showThePlayerThatOutOfTheRound = (currentRound) => {
+        let outTheRoundPlayer = currentRound.getOutTheRoundPlayer();
+        this.page.renderThePlayerOutTheRoundIs(outTheRoundPlayer);
+        document.getElementById("start_voicing").addEventListener("click", () => {
+            currentRound.incrementRoundStepsCounter();
+            this.PlayRound();
+        })
+    }
+
+    voicingOnOptions = (currentRound) => {
+        let outTheRoundPlayer = currentRound.getOutTheRoundPlayer();
+        let roundSubject = currentRound.getRoundSubject();
+        let randomOptions = this.generateOptions(roundSubject);
+        this.page.renderSelectRoundSubject(randomOptions, outTheRoundPlayer);
     }
 
     currentRoundStep = () => {
@@ -175,6 +205,17 @@ class Game {
         return this.rounds[this.rounds.length - 1]
     }
 
+    generateOptions = (roundSubject) => {
+        let otherOptions = this.options.filter(x => x != roundSubject);
+        let randomOptions = this.getMultipleRandom(otherOptions, 7);
+        randomOptions[Math.floor(Math.random() * 6)] = roundSubject;
+        return randomOptions;
+    }
+
+    getMultipleRandom(arr, num) {
+        const shuffled = [...arr].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, num);
+    }
 
 }
 

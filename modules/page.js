@@ -94,6 +94,28 @@ class Page {
         this.gameContainer.innerHTML = html;
     }
 
+    renderThePlayerOutTheRoundIs = (player) => {
+        let html = `
+        <p> اللاعب الذي لا يعرف موضوع الجولة هو: </p>
+        <h1> ${player.name} </h1>
+        <button id="start_voicing">التالي</button>
+    `;
+        this.gameContainer.innerHTML = html;
+    }
+
+    renderSelectRoundSubject = (randomOptions, currentPlayer) => {
+        let html = `
+            <span> على اللاعب </span>
+            <span> ${currentPlayer.name} </span>
+            <span> اختيار موضوع الجولة : </span>
+        `;
+        randomOptions.forEach((option) => {
+            html += `<p class="options" data-options="${option}">${option} </p>`
+        })
+        html += `<button id="show_scores">التالي</button>`
+        this.gameContainer.innerHTML = html;
+    }
+
 }
 
 export { Page };
