@@ -52,3 +52,11 @@
 #start_round {
   margin: auto;
 }
+
+.correct {
+  background-color: green;
+}
+
+.not_correct {
+  background-color: red;
+}

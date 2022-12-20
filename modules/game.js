@@ -34,7 +34,7 @@ class Game {
         document.querySelectorAll(".delete_player").forEach((deleteButton) => {
             deleteButton.addEventListener("click", this.deletePlayerAndReloadThePage);
         })
-        document.getElementById("start_round").addEventListener("click", this.createRound);
+        document.getElementById("start_round").addEventListener("click", this.checkPlayerAndCreateRound);
         console.log(this);
     }
 
@@ -47,9 +47,11 @@ class Game {
 
     AddPlayersAndReloadThePage = () => {
         let playerName = document.getElementById("player").value;
-        let player = new Player(playerName);
-        this.players.push(player);
-        this.showAddPlayersPage();
+        if (playerName != "") {
+            let player = new Player(playerName);
+            this.players.push(player);
+            this.showAddPlayersPage();
+        }
     }
 
     deletePlayerAndReloadThePage = (event) => {
@@ -59,6 +61,14 @@ class Game {
             return index != playerIndex;
         })
         this.showAddPlayersPage();
+    }
+
+    checkPlayerAndCreateRound = () => {
+        if (this.players.length >= 3) {
+            this.createRound();
+        } else {
+            alert("add more players")
+        }
     }
 
     createRound = () => {
@@ -108,7 +118,10 @@ class Game {
                 this.showThePlayerThatOutOfTheRound(currentRound);
                 break;
             case "voicing of subject":
-                this.voicingOnOptions(currentRound);
+                this.voicingOnOptions(currentRound, currentPlayer);
+                break;
+            case "show result":
+                this.showResult();
                 break;
             default:
                 break;
@@ -192,6 +205,32 @@ class Game {
         let roundSubject = currentRound.getRoundSubject();
         let randomOptions = this.generateOptions(roundSubject);
         this.page.renderSelectRoundSubject(randomOptions, outTheRoundPlayer);
+        document.querySelectorAll(".options").forEach((option) => {
+            option.addEventListener("click", (event) => {
+                if (event.target.dataset.option == roundSubject) {
+                    outTheRoundPlayer.addScore();
+                    event.target.classList.add("correct");
+                } else {
+                    event.target.classList.add("not_correct");
+                    document.querySelectorAll(".options").forEach((option) => {
+                        if (option.dataset.option == roundSubject) {
+                            option.classList.add("correct");
+                        }
+                    })
+                }
+                document.getElementById('show_scores').addEventListener('click', () => {
+                    currentRound.incrementRoundStepsCounter();
+                    this.PlayRound();
+                })
+            })
+        })
+    }
+
+    showResult = () => {
+        this.page.renderPlayersScore(this.players);
+        document.getElementById('start_new_round').addEventListener('click', () => {
+            this.createRound();
+        })
     }
 
     currentRoundStep = () => {

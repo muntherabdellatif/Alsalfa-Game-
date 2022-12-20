@@ -110,9 +110,23 @@ class Page {
             <span> اختيار موضوع الجولة : </span>
         `;
         randomOptions.forEach((option) => {
-            html += `<p class="options" data-options="${option}">${option} </p>`
+            html += `<p class="options" data-option="${option}">${option} </p>`
         })
         html += `<button id="show_scores">التالي</button>`
+        this.gameContainer.innerHTML = html;
+    }
+
+    renderPlayersScore = (players) => {
+        let html = `النتائج`
+        players.forEach((player) => {
+
+            html += `
+            <div>
+                <p>${player.name}</p>
+                <p>${player.score}</p>
+            </div>`
+        });
+        html += `<button id="start_new_round">جولة جديدة</button>`
         this.gameContainer.innerHTML = html;
     }
 
