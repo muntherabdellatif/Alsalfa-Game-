@@ -39,8 +39,8 @@ class Page {
 
     renderGiveTheDeviceToPlayer = (Player) => {
         let html = `
-            <p>اعطي الدور لاعب : </p>
-            <p>${Player.name}</p>
+            <p>اعطي الدور لاعب </p>
+            <p class="name">${Player.name}</p>
             <button id="show_player_the_option">التالي</button>
         `;
         this.gameContainer.innerHTML = html;
@@ -49,7 +49,7 @@ class Page {
     renderShowPlayerTheOption = (option) => {
         let html = `
         <p> موضوع الجولة هو</p>
-        <p>${option}</p>
+        <p class="name">${option}</p>
         <button id="give_the_device_to_next_player">التالي</button>
     `;
         this.gameContainer.innerHTML = html;
@@ -65,10 +65,12 @@ class Page {
 
     renderAskPage = (player1, player2) => {
         let html = `
-        <p> على اللاعب</p>
-        <p>${player1}</p>
-        <p>  ان يسال اللاعب</p>
-        <p>${player2}</p>
+        <p>
+            <span> على اللاعب</span>
+            <span class="name">${player1}</span>
+            <span>  ان يسال اللاعب</span>
+            <span class="name">${player2}</span>
+        </p>
         <button id="ask_other_player">التالي</button>
     `;
         this.gameContainer.innerHTML = html;
@@ -84,9 +86,11 @@ class Page {
 
     renderVoicingOnPlayer = (currentPlayer, otherPlayers) => {
         let html = `
-            <span> على اللاعب </span>
-            <span> ${currentPlayer.name} </span>
-            <span> اختيار اللاعب الذي لا يعلم موضوع الجولة : </span>
+            <p>
+                <span> على اللاعب </span>
+                <span class="name"> ${currentPlayer.name} </span>
+                <span> اختيار اللاعب الذي لا يعلم موضوع الجولة </span>
+            </p>
         `;
         otherPlayers.forEach((player, index) => {
             html += `<p class="player_options" data-player="${index}">${player.name} </p>`
@@ -96,8 +100,8 @@ class Page {
 
     renderThePlayerOutTheRoundIs = (player) => {
         let html = `
-        <p> اللاعب الذي لا يعرف موضوع الجولة هو: </p>
-        <h1> ${player.name} </h1>
+        <p> اللاعب الذي لا يعرف موضوع الجولة هو</p>
+        <h1 class="name"> ${player.name} </h1>
         <button id="start_voicing">التالي</button>
     `;
         this.gameContainer.innerHTML = html;
@@ -105,9 +109,11 @@ class Page {
 
     renderSelectRoundSubject = (randomOptions, currentPlayer) => {
         let html = `
-            <span> على اللاعب </span>
-            <span> ${currentPlayer.name} </span>
-            <span> اختيار موضوع الجولة : </span>
+            <p>
+                <span> على اللاعب </span>
+                <span class="name"> ${currentPlayer.name} </span>
+                <span> اختيار موضوع الجولة </span>
+            </p>
         `;
         randomOptions.forEach((option) => {
             html += `<p class="options" data-option="${option}">${option} </p>`
@@ -117,14 +123,14 @@ class Page {
     }
 
     renderPlayersScore = (players) => {
-        let html = `النتائج`
+        let html = `<h1> النتائج </h1>`
         players.forEach((player) => {
 
             html += `
-            <div>
-                <p>${player.name}</p>
-                <p>${player.score}</p>
-            </div>`
+            <p>
+                <span class="name">${player.name}</span>
+                <span class="name">${player.score}</span>
+            </p>`
         });
         html += `<button id="start_new_round">جولة جديدة</button>`
         this.gameContainer.innerHTML = html;
