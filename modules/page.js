@@ -23,7 +23,7 @@ class Page {
                 playersPageHtml += `
                     <div class="players_Box">
                         <p>${player.name}</p>
-                        <button class="delete_player" data-player=${index}>حذف الاعب</button>
+                        <button class="delete_player" data-player=${index}>حذف </button>
                     </div>
                 `;
             })
