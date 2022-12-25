@@ -41,6 +41,7 @@ body {
   padding: 5px;
   cursor: pointer;
   font-size: 30px;
+  box-shadow: 3px 5px 6px 3px #000000ba;
 }
 
 .header {
@@ -51,6 +52,8 @@ body {
   font-size: 30px;
   display: flex;
   justify-content: center;
+  margin-top: 5px;
+  box-shadow: 3px 5px 6px 3px #000000ba;
 }
 
 .players_Box {
@@ -62,6 +65,7 @@ body {
   padding: 10px;
   align-items: center;
   border-radius: 10px;
+  box-shadow: 3px 5px 6px 3px #000000ba;
 }
 
 .players_Box p {
@@ -96,6 +100,7 @@ body {
   font-size: 30px;
   padding: 10px;
   border-radius: 13px;
+  box-shadow: 3px 5px 6px 3px #000000ba;
 }
 
 .name {
@@ -110,7 +115,7 @@ body {
   height: 27px;
   display: flex;
   margin: 20px auto;
-  background-color: green;
+  background-color: #4a148c;
   color: white;
   justify-content: center;
   align-items: center;
@@ -118,12 +123,13 @@ body {
   cursor: pointer;
   font-size: 30px;
   padding: 15px;
+  box-shadow: 3px 5px 6px 3px #000000ba;
 }
 
 input {
   border: none;
   font-size: 30px;
-  width: 200px;
+  width: 180px;
   padding: 10px;
 }
 
